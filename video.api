@@ -1,0 +1,39 @@
+syntax = "v1"
+
+info (
+	title:   "视频工具大全"
+	version: "0.0.1"
+)
+
+type CommonRsp {
+	Code int    `json:"code"`
+	Msg  string `json:"msg"`
+}
+
+type ParseReq {
+	URL string `form:"url"`
+}
+
+type Data {
+	Author string `json:"author"`
+	Avatar string `json:"avatar"`
+	Time   string `json:"time"`
+	Title  string `json:"title"`
+	Cover  string `json:"cover"`
+	Url    string `json:"url"`
+}
+
+type ParseResult {
+	*Data
+}
+
+@server (
+	prefix: /video
+	group : video
+)
+
+service video {
+	@doc "获取水印版"
+	@handler extractVideo
+	get /parse (ParseReq) returns (ParseResult)
+}
